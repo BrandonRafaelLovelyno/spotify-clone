@@ -13,7 +13,7 @@ import uniqid from 'uniqid'
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/navigation";
 
-const LibraryModal = () => {
+const UploadModal = () => {
   const router=useRouter()
   const userContext=useUser()
   const supabase=useSupabaseClient()
@@ -149,4 +149,4 @@ const LibraryModal = () => {
   );
 };
 
-export default LibraryModal;
+export default UploadModal;

@@ -67,8 +67,9 @@ const Header: React.FC<Props> = ({ className, children }) => {
           </div>
         )}
       </div>
-
+      <div className="mt-5">
       {children}
+      </div>
     </div>
   );
 };

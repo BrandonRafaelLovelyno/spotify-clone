@@ -9,12 +9,14 @@ import { usePathname } from "next/navigation";
 import SidebarItem from "./SidebarItem";
 import SongLibrary from "./SongLibrary";
 import { twMerge } from "tailwind-merge";
+import { Song } from "@/types/schema";
 
 interface Props {
   className?: string;
+  songs:Song[];
 }
 
-const Sidebar: React.FC<Props> = ({ className }) => {
+const Sidebar: React.FC<Props> = ({ className ,songs }) => {
   const pathName = usePathname();
   const routes = useMemo(
     () => [
@@ -55,7 +57,7 @@ const Sidebar: React.FC<Props> = ({ className }) => {
         })}
       </div>
       <div className="flex-1 bg-neutral-900 mt-3 rounded-lg">
-        <SongLibrary />
+        <SongLibrary songs={songs} />
       </div>
     </div>
   );
