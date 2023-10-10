@@ -8,7 +8,7 @@ import { BsPlayFill } from "react-icons/bs";
 
 interface Props {
   song: Song;
-  onClick:(id:string)=>void;
+  onClick:(id:number)=>void;
 }
 
 const SongCard: React.FC<Props> = ({ song , onClick}) => {
@@ -28,7 +28,7 @@ const SongCard: React.FC<Props> = ({ song , onClick}) => {
           </div>
         </div>
         <div className="flex flex-col items-start">
-          <p className="text-white font-semibold">{song.title}</p>
+          <p className="text-white font-semibold text-left text-sm">{song.title}</p>
           <p className="text-xs">{song.author}</p>
         </div>  
       </div>

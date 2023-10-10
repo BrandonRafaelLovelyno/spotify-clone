@@ -9,12 +9,14 @@ import useAuthModal from "@/hooks/useAuthModal";
 import useLibraryModal from "@/hooks/useLibraryModal";
 import { Song } from "@/types/schema";
 import SongBook from "./SongBook";
+import useOnPlay from "@/hooks/useOnPlay";
 
 interface Props{
   songs:Song[];
 }
 
 const SongLibrary:React.FC<Props> = ({songs}) => {
+  const onPlay=useOnPlay(songs)
   const userContext=useUser()
   const authModal = useAuthModal()
   const libraryModal=useLibraryModal()
@@ -23,8 +25,6 @@ const SongLibrary:React.FC<Props> = ({songs}) => {
       return authModal.onOpen()
     }
     libraryModal.onOpen()
-    // TODO : check for subscription
-    // TODO : create uplaod modal
   };
 
   return (
@@ -42,7 +42,7 @@ const SongLibrary:React.FC<Props> = ({songs}) => {
             <p className="text-white font-bold mt-4 mb-5">List of songs!</p>
             {
              songs.length>0&&songs.map(song=>(
-                <SongBook song={song} key={song.id}/>
+                <SongBook song={song} key={song.id} buttonOnClick={()=>{onPlay(song.id)}}/>
               ))
             }
         </div>

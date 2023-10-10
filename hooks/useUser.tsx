@@ -32,8 +32,8 @@ export const CustUserContextProvider: React.FC<Props> = (props) => {
   const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
   const [subscription, setSubscription] = useState<Subscription | null>(null);
-  const getUserDetails = () => supabase.from("users").select("*").single();
-  const getSubscription = () =>
+  const getUserDetails = async () => supabase.from("users").select("*").single();
+  const getSubscription = async () =>
     supabase
       .from("subscriptons")
       .select("*,prices(*,products(*))")
@@ -69,6 +69,8 @@ export const CustUserContextProvider: React.FC<Props> = (props) => {
     subscription,
     userDetails
   }
+
+  console.log('render :',value)
 
   return <UserContext.Provider value={value} {...props}/>;
 };

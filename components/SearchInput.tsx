@@ -18,7 +18,7 @@ const SearchInput = () => {
             title:debouncedValue
         }
         const url=qs.stringifyUrl({
-            url:'http://localhost:3000/search',
+            url:'/search',
             query:query
         })
         router.push(url)

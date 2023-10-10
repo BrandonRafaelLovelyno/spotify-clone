@@ -3,6 +3,7 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
+import {BsFillPersonFill} from 'react-icons/bs'
 import NavigationButton from "./NavigationButton";
 import { useRouter } from "next/navigation";
 import AuthButton from "./AuthButton";
@@ -38,12 +39,12 @@ const Header: React.FC<Props> = ({ className, children }) => {
   return (
     <div
       className={twMerge(
-        "h-fit py-5 px-5 from-emerald-800 bg-gradient-to-b justify-between",
+        "h-fit pb-5 pt-7 pl-5 pr-10 from-emerald-800 bg-gradient-to-b justify-between",
         className
       )}
     >
       <div className="text-white items-center justify-between flex flex-row">
-        <div className="flex flex-row gap-x-3 md:hidden ">
+        <div className="flex flex-row gap-x-3 md:hidden items-center">
           <NavigationButton onClick={backRoute} icon={IoChevronBackOutline} />
           <NavigationButton
             onClick={forwardRoute}
@@ -51,9 +52,12 @@ const Header: React.FC<Props> = ({ className, children }) => {
           />
         </div>
         {userContext?.user ? (
-          <div className="ml-auto">
+          <div className="ml-auto flex items-center gap-x-2">
             <AuthButton disabled={false} onClick={handleSignOut}>
               Log out
+            </AuthButton>
+            <AuthButton disabled={false} className="rounded-full p-2">
+              <BsFillPersonFill size={20}/>
             </AuthButton>
           </div>
         ) : (

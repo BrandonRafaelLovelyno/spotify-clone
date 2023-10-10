@@ -11,6 +11,7 @@ import SupabaseProvider from "@/providers/SupabaseProvider";
 import MyUserContextProvider from "@/providers/MyUserContextProvider";
 import ToastProvider from "@/providers/ToastProvider";
 import getSongsByUserID from "@/helpers/getSongsByUserID";
+import Player from "@/components/Player";
 
 export const metadata: Metadata = {
   title: "Spotify Clone",
@@ -35,8 +36,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           <MyUserContextProvider>
             <ModalProvider/>
             <Sidebar songs={librarySongs} />
-            <div className="flex-1 flex flex-col h-full overflow-clip rounded-lg bg-neutral-900">
+            <div className="flex-1 flex flex-col h-full overflow-clip rounded-lg relative bg-neutral-900">
               {children}
+              <Player/>
             </div>
           </MyUserContextProvider>
         </SupabaseProvider>

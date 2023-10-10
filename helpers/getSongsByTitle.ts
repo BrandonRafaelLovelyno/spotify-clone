@@ -1,3 +1,5 @@
+"use server"
+
 import { Database } from "@/types/database";
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -12,12 +14,10 @@ const getSongsByTitle = async (title: string): Promise<Song[]> => {
     .from("songs")
     .select("*")
     .ilike("title", `%${title}%`);
-
     if(error){
         throw new Error(`Failed on fetching the searched songs : ${error.message}`)
     }
-
-    return (data.values as any)
+    return (data as any)
 };
 
 export default getSongsByTitle;

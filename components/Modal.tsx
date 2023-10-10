@@ -25,10 +25,9 @@ const Modal: React.FC<Props> = ({
     <Dialog.Root onOpenChange={onOpenChange} defaultOpen={isOpen} open={isOpen}>
       <Dialog.Portal>
         <Dialog.Overlay className="bg-black inset-0 opacity-50 fixed backdrop-blur-lg" />
-
         <Dialog.Content
           className={twMerge(
-            "duration-200 fixed md:h-auto h-full bg-neutral-900 top-[50%] left-[50%] p-8 translate-x-[-50%] translate-y-[-50%] md:w-[450px] md:h-max-[85vh] w-full focus:outline-none drop-shadow-lg rounded-md")}
+            "duration-200 fixed h-auto overflow-y-auto bg-neutral-900 top-[50%] left-[50%] p-8 translate-x-[-50%] translate-y-[-50%] md:w-[450px] md:h-max-[85vh] w-[80%] focus:outline-none drop-shadow-lg rounded-lg")}
         >
           <Dialog.Title className="text-xl text-center font-bold mb-4">
             {title}
