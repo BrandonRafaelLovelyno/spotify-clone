@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
-import { useForm, FieldValues ,SubmitHandler} from "react-hook-form";
+import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import uniqid from 'uniqid'
+import uniqid from "uniqid";
 
 import Modal from "./Modal";
 import useLibraryModal from "@/hooks/useLibraryModal";
@@ -12,16 +12,14 @@ import AuthButton from "./AuthButton";
 import { twMerge } from "tailwind-merge";
 import toast from "react-hot-toast";
 import { useUser } from "@/hooks/useUser";
-import { Database } from "@/types/database";
 import { useRouter } from "next/navigation";
 
-
 const LibraryModal = () => {
-  const router=useRouter()
-  const supabaseClient=createClientComponentClient<Database>()
-  const userContext=useUser()
+  const router = useRouter();
+  const supabaseClient = createClientComponentClient();
+  const userContext = useUser();
   const { isOpen, onClose } = useLibraryModal();
-  const [isLoading,setIsLoading]=useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const onChange = (open: boolean) => {
     if (!open) {
       onClose();
@@ -36,58 +34,66 @@ const LibraryModal = () => {
     },
   });
 
-  const onSumbit:SubmitHandler<FieldValues> = async (values):Promise<void> => {
-    setIsLoading(true)
-    try{
+  const onSumbit: SubmitHandler<FieldValues> = async (
+    values
+  ): Promise<void> => {
+    setIsLoading(true);
+    try {
+      const imageFile = values.image?.[0];
+      const songFile = values.song?.[0];
 
-      const imageFile=values.image?.[0]
-      const songFile=values.song?.[0]
+      const uid = uniqid();
 
-      const uid=uniqid()
+      const { data: songData, error: songError } = await supabaseClient.storage
+        .from("song")
+        .upload(`song-${values.title}-${uid}`, songFile, {
+          upsert: false,
+        });
 
-      const {data:songData,error:songError}=await supabaseClient.storage.from('song').upload(`song-${values.title}-${uid}`,songFile,{
-        upsert:false,
-      })
-
-      if(songError){
-        console.log(songError.message)
-        toast.error("Uh oh, the song could not be uploaded")
-        return
+      if (songError) {
+        console.log(songError.message);
+        toast.error("Uh oh, the song could not be uploaded");
+        return;
       }
 
-      const {data:imageData,error:imageError}=await supabaseClient.storage.from('image').upload(`image-${values.title}-${uid}`,imageFile,{
-        upsert:false,
-      })
+      const { data: imageData, error: imageError } =
+        await supabaseClient.storage
+          .from("image")
+          .upload(`image-${values.title}-${uid}`, imageFile, {
+            upsert: false,
+          });
 
-      if(imageError){
-        console.log(imageError.message)
-        toast.error("Uh oh, the image could not be uploaded")
-        return
+      if (imageError) {
+        console.log(imageError.message);
+        toast.error("Uh oh, the image could not be uploaded");
+        return;
       }
 
-      const dbSongData={
-        author:values.author,
-        user_id:userContext!.user!.id,
-        image_path:imageData.path,
-        song_path:songData.path,
-        title:values.title,
+      const dbSongData = {
+        author: values.author,
+        user_id: userContext!.user!.id,
+        image_path: imageData.path,
+        song_path: songData.path,
+        title: values.title,
+      };
+
+      const { error: dbSongError } = await supabaseClient
+        .from("songs")
+        .insert(dbSongData);
+
+      if (dbSongError) {
+        console.log(dbSongError.message);
+        toast.error("Uh oh, the song data could not be uploaded");
       }
 
-      const {error:dbSongError}=await supabaseClient.from('songs').insert(dbSongData)
-
-      if(dbSongError){
-        console.log(dbSongError.message)
-        toast.error("Uh oh, the song data could not be uploaded")
-      }
-
-      toast.success("Upload succeed")
-    }catch(err){
-      console.log(err)
-      toast.error("Uh oh, something went wrong")
-    }finally{
-      reset()
-      onClose()
-      router.refresh()
+      toast.success("Upload succeed");
+    } catch (err) {
+      console.log(err);
+      toast.error("Uh oh, something went wrong");
+    } finally {
+      reset();
+      onClose();
+      router.refresh();
     }
   };
 
@@ -98,7 +104,10 @@ const LibraryModal = () => {
       onOpenChange={onChange}
       description="Select your mp3 file(s)"
     >
-      <form onSubmit={handleSubmit(onSumbit)} className={twMerge("flex flex-col gap-y-4",isLoading&&'opacity-40')}>
+      <form
+        onSubmit={handleSubmit(onSumbit)}
+        className={twMerge("flex flex-col gap-y-4", isLoading && "opacity-40")}
+      >
         <Input
           id="title"
           placeholder="Song title"
@@ -116,31 +125,31 @@ const LibraryModal = () => {
           {...register("author", { required: true })}
         />
         <div>
-        <p className="text-sm font-semibold text-white mb-2">Song mp3 file</p>
-        <Input
-          id="song"
-          placeholder="Song file"
-          type="file"
-          disabled={isLoading}
-          accept=".mp3"
-          className=""
-          {...register("song", { required: true })}
-        />
+          <p className="text-sm font-semibold text-white mb-2">Song mp3 file</p>
+          <Input
+            id="song"
+            placeholder="Song file"
+            type="file"
+            disabled={isLoading}
+            accept=".mp3"
+            className=""
+            {...register("song", { required: true })}
+          />
         </div>
         <div>
-          <p className="text-sm font-semibold text-white mb-2">Song image file</p>
-        <Input
-          id="image"
-          placeholder="Song Image"
-          type="file"
-          disabled={isLoading}
-          accept="image/*"
-          {...register("image", { required: true })}
-        />
+          <p className="text-sm font-semibold text-white mb-2">
+            Song image file
+          </p>
+          <Input
+            id="image"
+            placeholder="Song Image"
+            type="file"
+            disabled={isLoading}
+            accept="image/*"
+            {...register("image", { required: true })}
+          />
         </div>
-        <AuthButton className="bg-green-500 mt-8 font-bold">
-          Upload
-        </AuthButton>
+        <AuthButton className="bg-green-500 mt-8 font-bold">Upload</AuthButton>
       </form>
     </Modal>
   );

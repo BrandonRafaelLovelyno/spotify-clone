@@ -1,11 +1,10 @@
 "use server";
 
-import { Database } from "@/types/database";
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Song } from "@/types/schema";
 
-const supabaseServer = createServerComponentClient<Database>({
+const supabaseServer = createServerComponentClient({
   cookies: cookies,
 });
 
@@ -21,13 +20,13 @@ const getSongsByUserID = async (): Promise<Song[]> => {
       .select("*")
       .eq("user_id", user.id);
 
-    if(error){
-        throw new Error(error.message)
+    if (error) {
+      throw new Error(error.message);
     }
 
     return data as any;
-  }else{
-    return []
+  } else {
+    return [];
   }
 };
 

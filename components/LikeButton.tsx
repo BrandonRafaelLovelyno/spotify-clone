@@ -7,7 +7,6 @@ import {
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { Database } from "@/types/database";
 import { useUser } from "@/hooks/useUser";
 import useAuthModal from "@/hooks/useAuthModal";
 import toast from "react-hot-toast";
@@ -20,7 +19,7 @@ interface Props {
 
 const uploadIsLiked = async (
   isLiked: boolean,
-  supabaseClient: SupabaseClient<Database>,
+  supabaseClient: SupabaseClient,
   song_id: number,
   user_id: string,
   router: any
@@ -52,7 +51,7 @@ const uploadIsLiked = async (
 };
 
 const fetchIsLiked = async (
-  supabaseClient: SupabaseClient<Database>,
+  supabaseClient: SupabaseClient,
   song_id: number,
   user_id: string
 ): Promise<boolean> => {
@@ -73,7 +72,7 @@ const LikeButton: React.FC<Props> = ({ song_id }) => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const router = useRouter();
   const userContext = useUser();
-  const supabaseClient = createClientComponentClient<Database>();
+  const supabaseClient = createClientComponentClient();
   const { onOpen } = useAuthModal();
   const Icon: IconType = isLiked ? AiFillHeart : AiOutlineHeart;
 
