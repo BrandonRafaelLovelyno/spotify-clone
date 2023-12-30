@@ -13,10 +13,10 @@ import { Song } from "@/types/schema";
 
 interface Props {
   className?: string;
-  songs:Song[];
+  songs: Song[];
 }
 
-const Sidebar: React.FC<Props> = ({ className ,songs }) => {
+const Sidebar: React.FC<Props> = ({ className, songs }) => {
   const pathName = usePathname();
   const routes = useMemo(
     () => [
@@ -39,7 +39,7 @@ const Sidebar: React.FC<Props> = ({ className ,songs }) => {
   return (
     <div
       className={twMerge(
-        `max-sm:hidden w-[200px] h-full flex flex-col overflow-y-auto text-sm text-neutral-400 mr-3`,
+        `w-[200px] h-full flex flex-col overflow-y-auto text-sm text-neutral-400 mr-3`,
         className
       )}
     >

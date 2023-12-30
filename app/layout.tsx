@@ -22,23 +22,23 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export const revalidate=0;
+export const revalidate = 0;
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const librarySongs=await getSongsByUserID()
+  const librarySongs = await getSongsByUserID();
   return (
     <html lang="en">
       <body
-        className={`${figtree.className} flex overflow-clip h-screen py-2 px-2 text-neutral-300 w-max-screen`}
+        className={`${figtree.className} flex overflow-clip h-screen py-2 px-2 text-neutral-300 w-max-screen bg-black`}
       >
-        <ToastProvider/>
+        <ToastProvider />
         <SupabaseProvider>
           <MyUserContextProvider>
-            <ModalProvider/>
-            <Sidebar songs={librarySongs} />
+            <ModalProvider />
+            <Sidebar songs={librarySongs} className="max-sm:hidden" />
             <div className="flex-1 flex flex-col h-full overflow-clip rounded-lg relative bg-neutral-900">
               {children}
-              <Player/>
+              <Player />
             </div>
           </MyUserContextProvider>
         </SupabaseProvider>
