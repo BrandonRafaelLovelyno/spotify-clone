@@ -38,7 +38,7 @@ const AuthModal = () => {
       onOpenChange={onChange}
     >
       <Auth
-        providers={["github", "discord"]}
+        providers={["github"]}
         theme="dark"
         magicLink
         supabaseClient={supabaseClient}
