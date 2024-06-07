@@ -91,6 +91,7 @@ const LibraryModal = () => {
       console.log(err);
       toast.error("Uh oh, something went wrong");
     } finally {
+      setIsLoading(false);
       reset();
       onClose();
       router.refresh();
@@ -113,7 +114,7 @@ const LibraryModal = () => {
           placeholder="Song title"
           type="text"
           disabled={isLoading}
-          className=" focus:-translate-y-1 focus:px-5 px-3 focus:placeholder:px-0"
+          className="px-3  focus:-translate-y-1 focus:px-5 focus:placeholder:px-0"
           {...register("title", { required: true })}
         />
         <Input
@@ -121,11 +122,11 @@ const LibraryModal = () => {
           placeholder="Song author"
           type="text"
           disabled={isLoading}
-          className=" focus:-translate-y-1 focus:px-5 px-3 focus:placeholder:px-0"
+          className="px-3  focus:-translate-y-1 focus:px-5 focus:placeholder:px-0"
           {...register("author", { required: true })}
         />
         <div>
-          <p className="text-sm font-semibold text-white mb-2">Song mp3 file</p>
+          <p className="mb-2 text-sm font-semibold text-white">Song mp3 file</p>
           <Input
             id="song"
             placeholder="Song file"
@@ -137,7 +138,7 @@ const LibraryModal = () => {
           />
         </div>
         <div>
-          <p className="text-sm font-semibold text-white mb-2">
+          <p className="mb-2 text-sm font-semibold text-white">
             Song image file
           </p>
           <Input
@@ -149,7 +150,7 @@ const LibraryModal = () => {
             {...register("image", { required: true })}
           />
         </div>
-        <AuthButton className="bg-green-500 mt-8 font-bold">Upload</AuthButton>
+        <AuthButton className="mt-8 font-bold bg-green-500">Upload</AuthButton>
       </form>
     </Modal>
   );
