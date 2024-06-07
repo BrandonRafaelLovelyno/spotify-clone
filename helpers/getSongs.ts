@@ -12,7 +12,6 @@ export const getSongs = async (): Promise<Song[]> => {
     .select("*")
     .order("created_at", { ascending: false });
   if (error) {
-    console.log("Error on fetching song :", error);
   }
   return (data as any) || [];
 };

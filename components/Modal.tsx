@@ -24,16 +24,16 @@ const Modal: React.FC<Props> = ({
   return (
     <Dialog.Root onOpenChange={onOpenChange} defaultOpen={isOpen} open={isOpen}>
       <Dialog.Portal>
-        <Dialog.Overlay className="bg-black inset-0 opacity-50 fixed backdrop-blur-lg" />
+        <Dialog.Overlay className="fixed inset-0 bg-black opacity-50 backdrop-blur-lg" />
         <Dialog.Content
           className={twMerge(
-            "duration-200 fixed h-[80%] overflow-y-auto bg-neutral-900 top-[50%] left-[50%] p-8 translate-x-[-50%] translate-y-[-50%] md:w-[450px] md:h-max-[85vh] w-[80%] focus:outline-none drop-shadow-lg rounded-lg"
+            "duration-200 fixed h-fit max-h-[80%] overflow-y-auto bg-neutral-900 top-[50%] left-[50%] p-8 translate-x-[-50%] translate-y-[-50%] md:w-[450px] md:h-max-[85vh] w-[80%] focus:outline-none drop-shadow-lg rounded-lg"
           )}
         >
-          <Dialog.Title className="text-xl text-center font-bold mb-4">
+          <Dialog.Title className="mb-4 text-xl font-bold text-center">
             {title}
           </Dialog.Title>
-          <Dialog.Description className="text-sm text-center mb-5 text-neutral-400 font-semibold">
+          <Dialog.Description className="mb-5 text-sm font-semibold text-center text-neutral-400">
             {description}
           </Dialog.Description>
           <div className="pt-8">{children}</div>

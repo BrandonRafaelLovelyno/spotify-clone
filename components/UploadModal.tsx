@@ -13,12 +13,18 @@ import { twMerge } from "tailwind-merge";
 import toast from "react-hot-toast";
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/navigation";
+import useConfirmationModal from "@/hooks/useConfirmation";
 
 const LibraryModal = () => {
   const router = useRouter();
   const supabaseClient = createClientComponentClient();
   const userContext = useUser();
   const { isOpen, onClose } = useLibraryModal();
+  const {
+    onOpen,
+    onConfirm,
+    onClose: onCloseConfirmation,
+  } = useConfirmationModal();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const onChange = (open: boolean) => {
     if (!open) {
@@ -51,7 +57,6 @@ const LibraryModal = () => {
         });
 
       if (songError) {
-        console.log(songError.message);
         toast.error("Uh oh, the song could not be uploaded");
         return;
       }
@@ -64,7 +69,6 @@ const LibraryModal = () => {
           });
 
       if (imageError) {
-        console.log(imageError.message);
         toast.error("Uh oh, the image could not be uploaded");
         return;
       }
@@ -82,13 +86,11 @@ const LibraryModal = () => {
         .insert(dbSongData);
 
       if (dbSongError) {
-        console.log(dbSongError.message);
         toast.error("Uh oh, the song data could not be uploaded");
       }
 
       toast.success("Upload succeed");
     } catch (err) {
-      console.log(err);
       toast.error("Uh oh, something went wrong");
     } finally {
       setIsLoading(false);
@@ -106,7 +108,14 @@ const LibraryModal = () => {
       description="Select your mp3 file(s)"
     >
       <form
-        onSubmit={handleSubmit(onSumbit)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          onConfirm(() => {
+            handleSubmit(onSumbit)();
+            onCloseConfirmation();
+          });
+          onOpen();
+        }}
         className={twMerge("flex flex-col gap-y-4", isLoading && "opacity-40")}
       >
         <Input
@@ -114,7 +123,7 @@ const LibraryModal = () => {
           placeholder="Song title"
           type="text"
           disabled={isLoading}
-          className="px-3  focus:-translate-y-1 focus:px-5 focus:placeholder:px-0"
+          className="px-3 focus:-translate-y-1 focus:px-5 focus:placeholder:px-0"
           {...register("title", { required: true })}
         />
         <Input
@@ -122,7 +131,7 @@ const LibraryModal = () => {
           placeholder="Song author"
           type="text"
           disabled={isLoading}
-          className="px-3  focus:-translate-y-1 focus:px-5 focus:placeholder:px-0"
+          className="px-3 focus:-translate-y-1 focus:px-5 focus:placeholder:px-0"
           {...register("author", { required: true })}
         />
         <div>

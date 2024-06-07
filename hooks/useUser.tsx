@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -32,7 +32,8 @@ export const CustUserContextProvider: React.FC<Props> = (props) => {
   const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
   const [subscription, setSubscription] = useState<Subscription | null>(null);
-  const getUserDetails = async () => supabase.from("users").select("*").single();
+  const getUserDetails = async () =>
+    supabase.from("users").select("*").single();
   const getSubscription = async () =>
     supabase
       .from("subscriptons")
@@ -40,46 +41,44 @@ export const CustUserContextProvider: React.FC<Props> = (props) => {
       .in("status", ["trialing", "active"])
       .single();
 
-  useEffect(()=>{
-    if(user&&!isLoadingUser&&!userDetails&&!subscription){
-        setIsLoadingData(true)
-        Promise.allSettled([getUserDetails(),getSubscription()])
-            .then(result=>{
-                const userDetailsPromise=result[0]
-                const subscriptionPromise=result[1]
-                if(userDetailsPromise.status=="fulfilled"){
-                  console.log(userDetailsPromise.value.data)
-                    setUserDetails(userDetailsPromise.value.data as UserDetails)
-                }
-                if(subscriptionPromise.status=="fulfilled"){
-                    setSubscription(subscriptionPromise.value.data as Subscription)
-                }   
-                setIsLoadingData(false)
-            })
-    }else if(!user&&!isLoadingUser&&!userDetails&&!subscription){
-        setUserDetails(null)
-        setSubscription(null)
+  useEffect(() => {
+    if (user && !isLoadingUser && !userDetails && !subscription) {
+      setIsLoadingData(true);
+      Promise.allSettled([getUserDetails(), getSubscription()]).then(
+        (result) => {
+          const userDetailsPromise = result[0];
+          const subscriptionPromise = result[1];
+          if (userDetailsPromise.status == "fulfilled") {
+            setUserDetails(userDetailsPromise.value.data as UserDetails);
+          }
+          if (subscriptionPromise.status == "fulfilled") {
+            setSubscription(subscriptionPromise.value.data as Subscription);
+          }
+          setIsLoadingData(false);
+        }
+      );
+    } else if (!user && !isLoadingUser && !userDetails && !subscription) {
+      setUserDetails(null);
+      setSubscription(null);
     }
-  },[user,isLoadingUser])
+  }, [user, isLoadingUser]);
 
-  const value:UserContextType={
+  const value: UserContextType = {
     accessToken,
     user,
-    isLoading:isLoadingUser||isLoadingData,
+    isLoading: isLoadingUser || isLoadingData,
     subscription,
-    userDetails
-  }
+    userDetails,
+  };
 
-  console.log('render :',value)
-
-  return <UserContext.Provider value={value} {...props}/>;
+  return <UserContext.Provider value={value} {...props} />;
 };
 
-export const useUser=()=>{
-  const context=useContext(UserContext)
-  if(context===undefined){
-    throw new Error ("The user context is only available wihtin the provider")
-  }else{
+export const useUser = () => {
+  const context = useContext(UserContext);
+  if (context === undefined) {
+    throw new Error("The user context is only available wihtin the provider");
+  } else {
     return context;
   }
-}
+};

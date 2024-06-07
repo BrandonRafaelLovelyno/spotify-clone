@@ -41,7 +41,6 @@ const uploadIsLiked = async (
       user_id,
     });
     if (error) {
-      console.log(error.message);
       toast.error("Uh oh, failed to like song");
       return;
     }
