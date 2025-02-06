@@ -1,34 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Spotify Clone
 
-## Getting Started
+This is a Next.js full-stack project that replicates Spotify, inspired by [Code with Antonio](https://youtu.be/2aeMRB8LL4o?si=Njzat0iazfvTTE_-).
 
-First, run the  server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+    Upload & Stream Songs: Users can upload their own songs and stream them.
+    Accessible Music Platform: An open and inclusive platform for all music lovers.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    Next.js: A powerful full-stack framework that streamlined both front-end and back-end development.
+    Supabase: A Backend-as-a-Service solution that handled all backend functionalities without complex backend code.
+    PostgreSQL: A robust and reliable database for managing song data and user information.
+    Zustand: A simple and scalable state management library for efficient application state handling.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+To set up this project locally, follow these steps:
 
-To learn more about Next.js, take a look at the following resources:
+### Clone the repository:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    git clone https://github.com/BrandonRafaelLovelyno/spotify-clone.git  
+    cd spotify-clone  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Install dependencies:
 
-## Deploy on Vercel
+    npm install  # or yarn install  
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Set up environment variables:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    Create a .env file in the root directory.
+    Add the required environment variables for authentication and database connection.
+
+### Run the development server:
+
+    npm run dev  # or yarn dev  
+
+    The application will be available at http://localhost:3000.
+
+## Deployment
+
+This project is deployed on Vercel:
+👉 [Live Demo](https://brandon-spotify-clone.vercel.app)
+
+## Additional Information
+
+Check out my [LinkedIn post](https://www.linkedin.com/posts/brandon-rafael-lovelyno_nextjs-supabase-postgresql-activity-7204687693040021504-thKR?utm_source=share&utm_medium=member_desktop) for more insights.
